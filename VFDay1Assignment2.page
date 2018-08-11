@@ -1,0 +1,28 @@
+<apex:page standardController="Account" extensions="SearchAccountExtensions1" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:outputPanel id="table">
+            <br/>
+                <h1> Account List</h1>
+            <br/>
+            <br/>
+                <apex:outputPanel rendered="{! renderTable }">
+                    <apex:pageBlockTable value="{! accountList }" var="account">
+                        <apex:column headerValue="Account Name">
+                            <apex:outputLink value="/apex/ContactAlphaSearch?AccId={!account.id}">
+                                {!account.name}
+                            </apex:outputLink>
+                        </apex:column>
+                        <apex:column value="{!account.Name}"/>
+                        <apex:column value="{!account.Phone}"/>
+                        <apex:column value="{!account.BillingStreet}"/>
+                        <apex:column value="{!account.BillingCity}"/>
+                        <apex:column value="{!account.BillingState}"/>
+                        <apex:column value="{!account.BillingPostalCode}"/>
+                        <apex:column value="{!account.BillingCountry}"/>                            
+                    </apex:pageBlockTable> 
+                </apex:outputPanel>   
+            </apex:outputPanel>
+        </apex:pageBlock>   
+    </apex:form>
+</apex:page>

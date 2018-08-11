@@ -1,0 +1,49 @@
+<apex:page standardController="Account" extensions="SearchAccountExtensions" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:actionFunction name="searchAction" action="{! search }" reRender="table"/> 
+            <apex:pageBlock >
+                Enter Search Keyword &nbsp;
+                <apex:inputText styleClass="textBox" value="{! inputString }" onKeyPress=" return doSearch()"/> &nbsp;
+                    <apex:commandButton value="Search" action="{! search }" reRender="table"/>  &nbsp;
+                        <apex:outputPanel id="table">
+                            <apex:outputPanel rendered="{! renderTableAccount }">
+                                <br/> <br/>
+                                    <h1>Account</h1> <br/>
+                                        <apex:pageBlockTable value="{! accountList }" var="account">
+                                <apex:column value="{!account.Name}"/>
+                                          </apex:pageBlockTable> 
+                            </apex:outputPanel> 
+                        <apex:outputPanel rendered="{! renderTableContact }">
+                        <br/> <br/>
+                            <h1>Contact</h1> <br/>
+                        <apex:pageBlockTable value="{! contactList }" var="contact">
+                            <apex:column value="{!contact.FirstName}"/>
+                            <apex:column value="{!contact.LastName}"/>  
+                        </apex:pageBlockTable> 
+                    </apex:outputPanel>   
+                    <apex:outputPanel rendered="{! renderTableLead }">
+                        <br/> <br/>
+                            <h1>Lead</h1> <br/>
+                        <apex:pageBlockTable value="{! leadList }" var="lead">
+                            <apex:column value="{!lead.Name}"/> 
+                        </apex:pageBlockTable> 
+                    </apex:outputPanel>   
+                <apex:outputPanel rendered="{! renderTableOpportunity }">
+                        <br/> <br/>
+                            <h1>Opportunity</h1> <br/>
+                <apex:pageBlockTable value="{! opportunityList }" var="opportunity">
+                            <apex:column value="{!opportunity.Name}"/>  
+                        </apex:pageBlockTable> 
+                    </apex:outputPanel>   
+                </apex:outputPanel>
+        </apex:pageBlock>   
+    </apex:form>
+    <script>
+        function doSearch() {
+            if(event.keyCode == 13) {
+                searchAction();
+                return false;
+            }
+        }
+    </script>
+</apex:page>

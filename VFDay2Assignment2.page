@@ -1,0 +1,46 @@
+    <apex:image alt="Header Image" height="200px" width="100%" url="{!$Resource.Header}"/>
+        <apex:form >
+            <apex:pageBlock title="Contact">
+                <table>
+                    <tr>
+                        <apex:repeat value="{!searchAlphabet}" var="nn">
+                            <td><apex:commandLink action="{!display}"  reRender="pg" ><apex:param value="{!nn}" name="sss"  assignTo="{!searchVariableiable}"/> {!nn}</apex:commandLink></td>
+                        </apex:repeat>
+                    </tr>
+                </table>
+            <apex:outputpanel id="pg">
+                <div id="showdata">
+                    <apex:pageBlockTable value="{!showContact}" var="k">
+                        <<apex:page standardController="Contact" extensions="PagingDemoWithAlpabets">
+apex:column headerValue="Name" value="{!k.name}"/> 
+                            <apex:column headerValue="Mobile Phone" value="{!k.MobilePhone}"/> 
+                        <apex:column >
+                            <apex:outputLink onclick="deleteContact('{!k.id}');" >
+                                Delete
+                            </apex:outputLink>
+                        </apex:column> 
+                    </apex:pageBlockTable>
+                </div>
+            <div id="nodata" style = "display:none;">
+                <p><b>No record by selected letter.</b></p>
+            </div>  
+    <script>
+        var sze='{!size}';
+        sz=parseInt(sze);
+        //  alert(sz);
+        if(sz>0)
+        {
+            document.getElementById('showdata').style.display="block";
+            document.getElementById('nodata').style.display="none";
+        }
+        else
+        {
+            document.getElementById('showdata').style.display="none";
+            document.getElementById('nodata').style.display="block";
+        }
+    </script>   
+    </apex:outputpanel>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:includeScript value="{!$Resource.RemoteJS}"/>
+</apex:page>

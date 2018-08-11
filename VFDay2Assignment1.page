@@ -1,0 +1,42 @@
+<apex:page standardController="Account" extensions="onlyAccountSearch" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:actionFunction name="searchAction" action="{! search }" reRender="table"/> 
+        <apex:pageBlock >
+            Enter Account Name &nbsp;
+            <apex:inputText id="textBox" value="{! inputString }" onKeyPress=" return doSearch()"/> &nbsp;
+            <apex:commandButton value="Search" oncomplete="clear();" action="{! search }" reRender="table"/> &nbsp;
+            <apex:commandButton value="Clear Results" action="{! clear }"/><br/><br/>
+            <apex:outputPanel id="table">
+                    <apex:outputPanel rendered="{! renderTableAccount }">
+                        <apex:pageBlockTable value="{! accountList }" var="account">
+                            <apex:column headerValue="Account Name">
+                                <apex:outputLink value="/apex/ContactAlphaSearch?AccId={!account.id}&input={!inputString}">
+                                    {!account.name}
+                                </apex:outputLink>
+                            </apex:column>
+                            <apex:column value="{!account.Phone}"/>
+                            <apex:column value="{!account.Website}"/>
+                            <apex:column value="{!account.Active__c}"/>
+                        </apex:pageBlockTable> 
+                    </apex:outputPanel>   
+                    <apex:outputPanel rendered="{! renderMessage }">
+                        {! message }
+                    </apex:outputPanel>          
+            </apex:outputPanel>
+        </apex:pageBlock>   
+    </apex:form>
+    <apex:includeScript value="https://code.jquery.com/jquery-2.2.4.js"/>
+    <script>
+        $j = jQuery.noConflict();
+        function doSearch() {
+            if(event.keyCode == 13) {
+                searchAction();
+                clear();
+                return false;
+            }
+        }
+        function clear() {
+            $j("[id$=textBox]").val("");
+    }
+    </script>
+</apex:page>
